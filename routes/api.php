@@ -36,8 +36,9 @@ Route::post('course_by_id_paid', [CourseController::class, 'course_by_id_paid'])
 Route::get('my_courses', [CourseController::class, 'my_courses']);
 Route::get('latest_courses', [CourseController::class, 'latest_courses']);
 
+Route::post('lesson_by_id', [LessonController::class, 'lesson_by_id']);
+Route::post('add_lesson_attachment', [LessonController::class, 'add_lesson_attachment']);
 
-Route::post('comments', [LessonController::class, 'comments']);
 Route::post('replies', [LessonController::class, 'replies']);
 Route::post('add_comment', [LessonController::class, 'add_comment']);
 Route::post('add_replie', [LessonController::class, 'add_replie']);

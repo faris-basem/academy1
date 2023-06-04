@@ -2,132 +2,67 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Code;
 use App\Models\Lesson;
 use App\Models\Replie;
 use App\Models\Comment;
 use App\Models\Commetlike;
 use App\Models\ReplieLike;
 use Illuminate\Http\Request;
+use App\Models\LessonAttachment;
+use App\Models\Section;
 use Illuminate\Support\Facades\Auth;
 
 class LessonController extends Controller
 {
-    public function get_free_lesson_by_id(Request $request)
+    public function lesson_by_id(Request $request)
     {
-        $lesson=Lesson::where('id',$request->lesson_id)->first();
+        $lesson=Lesson::where('id',$request->lesson_id)->with('comments','attachment')->first();
+        $sec=Section::where('id',$lesson->section_id)->first();
+        if($lesson->type==0){
+            $sub=Code::where('user_id',Auth::guard('api')->user()->id)->where('course_id', $sec->course_id)->first();
+            if($sub){
+                return response()->json([
+                    'message' => 'Data Fetched Successfully',
+                    'code' => 200,
+                    'status'=>true,
+                    'data'=>$lesson
+                ]);
+            }else{
+                return response()->json([
+                    'message' =>'You Should Buy the course First',
+                    'code' => 200,
+                    'status'=>false
+                ]);
+            }
+        }else{
             return response()->json([
                 'message' => 'Data Fetched Successfully',
                 'code' => 200,
                 'status'=>true,
                 'data'=>$lesson
             ]);
-    }
-
-    public function add_comment(Request $request)
-    {
-        $comment=new Comment();
-        $comment->lesson_id=$request->lesson_id;
-        $comment->comment=$request->comment;
-        $comment->user_id=Auth::guard('api')->user()->id;
-        $comment->save();
-        return response()->json([
-            'message' => 'Comment Added Successfully',
-            'code' => 200,
-            'status'=>true,
-            'data'=>$comment
-        ]);
-    }
-    public function add_replie(Request $request)
-    {
-        $replie=new Replie();
-        $replie->comment_id=$request->comment_id;
-        $replie->replie=$request->replie;
-        $replie->user_id=Auth::guard('api')->user()->id;
-        $replie->save();
-        return response()->json([
-            'message' => 'Replie Added Successfully',
-            'code' => 200,
-            'status'=>true,
-            'data'=>$replie
-        ]);
-    }
-
-    public function comments(Request $request)
-    {
-        $comments=Comment::where('lesson_id',$request->lesson_id)->get();
-        return response()->json([
-            'message' => 'Data Fetched Successfully',
-            'code' => 200,
-            'status'=>true,
-            'data'=>$comments
-        ]);
-    }
-    public function replies(Request $request)
-    {
-        $replies=Replie::where('comment_id',$request->comment_id)->get();
-        return response()->json([
-            'message' => 'Data Fetched Successfully',
-            'code' => 200,
-            'status'=>true,
-            'data'=>$replies
-        ]);
-    }
-
-    public function add_like_comment(Request $request)
-    {
-        $is_like=Commetlike::where('user_id',Auth::guard('api')->user()->id)->where('comment_id',$request->comment_id)->first();
-        if($is_like){
-            $comment=Comment::where('id',$request->comment_id)->first();
-            $comment->likes_count--;
-            $comment->save();
-            $is_like->delete();
-            return response()->json([
-                'code' => 200,
-                'data' => 'Like Removed',
-                'status'=>true,
-            ]);
-
-        }else{
-            $like=new Commetlike();
-            $like->comment_id=$request->comment_id;
-            $like->user_id=Auth::guard('api')->user()->id;
-            $like->save();
-            $comment=Comment::where('id',$request->comment_id)->first();
-            $comment->likes_count++;
-            $comment->save();
-            return response()->json([
-                'code' => 200,
-                'data' => 'Like Added',
-                'status'=>true,
-            ]);
         }
     }
-    public function add_like_replie(Request $request)
+
+    public function add_lesson_attachment(Request $request)
     {
-        $is_like=ReplieLike::where('user_id',Auth::guard('api')->user()->id)->where('replie_id',$request->replie_id)->first();
-        if($is_like){
-            $replie=Replie::where('id',$request->replie_id)->first();
-            $replie->likes_count--;
-            $replie->save();
-            $is_like->delete();
-            return response()->json([
-                'code' => 200,
-                'data' => 'Like Removed',
-                'status'=>true,
-            ]);
-        }else{
-            $like=new ReplieLike();
-            $like->user_id=Auth::guard('api')->user()->id;
-            $like->replie_id=$request->replie_id;
-            $like->save();
-            $replie=Replie::where('id',$request->replie_id)->first();
-            $replie->likes_count++;
-            $replie->save();
-            return response()->json([
-                'code' => 200,
-                'data' => 'Like Added',
-                'status'=>true,
-            ]);
-        }
+        $attachmentFile = $request->file('attachment');
+        $file_name = $attachmentFile->getClientOriginalName();
+
+        $attachment = new LessonAttachment();
+        $attachment->file_name = $file_name;
+        $attachment->lesson_id = $request->lesson_id;
+        $attachment->file_link = asset('Attachments/' . $request->lesson_id . '/' . $file_name);
+        $attachment->save();
+
+        $attachmentFile->move(public_path('Attachments/' . $request->lesson_id), $file_name);
+
+        return response()->json([
+            'message' => 'File Added Successfully',
+            'code' => 200,
+            'status' => true,
+            'attachment' => $attachment, 
+        ]);
     }
 }
