@@ -5,15 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Section extends Model
+class Video extends Model
 {
     use HasFactory;
-    protected $table = 'sections';
+    protected $table = 'videos';
     protected $guarded = [];
-
-
-    public function lessons()
-    {
-        return $this->hasMany(Lesson::class,'section_id');
-    }
 }

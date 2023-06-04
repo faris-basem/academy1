@@ -30,20 +30,6 @@ class CourseController extends Controller
         ]);
     }
 
-    public function course_by_id(Request $request)
-    {
-        $course = Course::where('id', $request->course_id)->first();
-        $sections = Section::where('course_id', $request->course_id)->pluck('id');
-        $lessons = Lesson::whereIn('section_id', $sections)->where('type', 1)->get();
-        return response()->json([
-            'message' => 'Data Fetched Successfully',
-            'code' => 200,
-            'status' => true,
-            'data' => $course,
-            'lessons' => $lessons
-        ]);
-    }
-
     public function my_courses()
     {
         $c = Code::where('user_id', Auth::guard('api')->user()->id)->pluck('course_id');
@@ -56,19 +42,47 @@ class CourseController extends Controller
         ]);
     }
 
-    public function course_by_id_paid(Request $request)
+    public function course_by_id(Request $request)
     {
         $c = Code::where('user_id', Auth::guard('api')->user()->id)->where('course_id', $request->course_id)->first();
         if ($c) {
             $course = Course::where('id', $request->course_id)->first();
-            $sections=Section::where('course_id',$course->id)->get();
-            $course['sections']=$sections;
+            $sections = Section::where('course_id', $course->id)->get();
+            $course['sections'] = $sections;
             return response()->json([
                 'message' => 'Data Fetched Successfully',
                 'code' => 200,
                 'status' => true,
                 'data' => $course,
             ]);
+        } else {
+            $course = Course::where('id', $request->course_id)->first();
+            $sections = Section::where('course_id', $request->course_id)->pluck('id');
+            $lessons = Lesson::whereIn('section_id', $sections)->get();
+            $lessons1 = Lesson::whereIn('section_id', $sections)->where('type', 1)->get();
+            if ($course->type == 1) {
+                return response()->json([
+                    'message' => 'Data Fetched Successfully',
+                    'code' => 200,
+                    'status' => true,
+                    'data' => $course,
+                    'lessons' => $lessons
+                ]);
+            } elseif ($course->type == 0 && $lessons1->count() > 0) {
+                return response()->json([
+                    'message' => 'Data Fetched Successfully',
+                    'code' => 200,
+                    'status' => true,
+                    'data' => $course,
+                    'lessons' => $lessons1
+                ]);
+            } else {
+                return response()->json([
+                    'message' => 'You Should Buy The Course First',
+                    'code' => 403,
+                    'status' => false,
+                ]);
+            }
         }
     }
 
