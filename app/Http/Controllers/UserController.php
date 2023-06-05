@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Verify;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -121,6 +122,39 @@ class UserController extends Controller
             'message' => 'logout Successfully',
 
         ]);
+    }
+
+    public function verify(Request $request)
+    {
+        $verify= new Verify();
+        $verify->user_id=Auth::guard('api')->user()->id;
+        $verify->name=$request->name;
+        $verify->governorate=$request->governorate;
+        $verify->address=$request->address;
+
+        $pfp=$request->file('profile_picture');
+        $frontp=$request->file('front_pic');
+        $backp=$request->file('back_pic');
+
+        $pfp_name=$pfp->getClientOriginalName();
+        $frontp_name=$frontp->getClientOriginalName();
+        $backp_name=$backp->getClientOriginalName();
+
+        $verify->profile_picture=asset('Attachments/Verify_Attachments/' . Auth::guard('api')->user()->id . '/' . $pfp_name);
+        $verify->front_pic=asset('Attachments/Verify_Attachments/' . Auth::guard('api')->user()->id . '/' . $frontp_name);
+        $verify->back_pic=asset('Attachments/Verify_Attachments/' . Auth::guard('api')->user()->id . '/' . $backp_name);
+        $verify->save();
+
+        $pfp->move(public_path('Attachments/Verify_Attachments/' . Auth::guard('api')->user()->id), $pfp_name);
+        $frontp->move(public_path('Attachments/Verify_Attachments/' . Auth::guard('api')->user()->id), $frontp_name);
+        $backp->move(public_path('Attachments/Verify_Attachments/' . Auth::guard('api')->user()->id), $backp_name);
+
+        return response()->json([
+            'message' => 'Request Sent Successfully',
+            'code' => 200,
+            'status' => true,
+        ]);
+
     }
 
     public function forgot(Request $request)

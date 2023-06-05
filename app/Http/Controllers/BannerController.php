@@ -21,6 +21,17 @@ class BannerController extends Controller
         ]);
      
     }
+    public function ad()
+    {
+        $w = DB::table('banners')->where('type', 'ad')->get();
+      
+        return response()->json([
+            'message' => 'Data Fetched Successfully',
+            'code' => 200,
+            'status'=>true,
+            'data'=>$w
+        ]);
+    }
 
     public function banner()
     {

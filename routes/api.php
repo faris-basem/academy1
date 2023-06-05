@@ -24,6 +24,7 @@ Route::post('login',[UserController::class,'login']);
 Route::post('logout',[UserController::class,'logout']);
 Route::post('forgot',[UserController::class,'forgot']);
 Route::post('change_pass',[UserController::class,'chang_pass']);
+Route::post('verify',[UserController::class,'verify']);
 
 Route::get('wellcome',[BannerController::class, 'wellcom']);
 Route::get('banner', [BannerController::class, 'banner']);
