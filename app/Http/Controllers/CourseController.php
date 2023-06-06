@@ -7,6 +7,7 @@ use App\Models\Level;
 use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\Section;
+use App\Models\StudentPoint;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -45,10 +46,12 @@ class CourseController extends Controller
     public function course_by_id(Request $request)
     {
         $c = Code::where('user_id', Auth::guard('api')->user()->id)->where('course_id', $request->course_id)->first();
+        $leaders = StudentPoint::where('course_id', $request->course_id)->orderBy('points', 'desc')->get();
         if ($c) {
             $course = Course::where('id', $request->course_id)->first();
             $sections = Section::where('course_id', $course->id)->get();
             $course['sections'] = $sections;
+            $course['leader_board'] = $leaders;
             return response()->json([
                 'message' => 'Data Fetched Successfully',
                 'code' => 200,
@@ -61,6 +64,8 @@ class CourseController extends Controller
             $lessons = Lesson::whereIn('section_id', $sections)->get();
             $lessons1 = Lesson::whereIn('section_id', $sections)->where('type', 1)->get();
             if ($course->type == 1) {
+                $course['sections'] = $sections;
+                $course['leader_board'] = $leaders;
                 return response()->json([
                     'message' => 'Data Fetched Successfully',
                     'code' => 200,
@@ -88,7 +93,7 @@ class CourseController extends Controller
 
     public function latest_courses()
     {
-        $co=Course::latest()->paginate(2);
+        $co = Course::latest()->paginate(2);
         return response()->json([
             'message' => 'Data Fetched Successfully',
             'code' => 200,
