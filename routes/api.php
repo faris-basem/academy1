@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CodeController;
+use App\Http\Controllers\QuizController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\BannerController;
@@ -32,7 +33,9 @@ Route::get('privacy', [BannerController::class, 'privacy']);
 Route::get('about_us', [BannerController::class, 'about_us']);
 
 Route::get('subjects', [SubjectController::class, 'subjects']);
+
 Route::post('levels', [LevelController::class, 'levels']);
+
 Route::post('get_courses_from_levels', [CourseController::class, 'get_courses_from_levels']);
 Route::post('course_by_id', [CourseController::class, 'course_by_id']);
 Route::get('my_courses', [CourseController::class, 'my_courses']);
@@ -47,6 +50,10 @@ Route::get('videoes_may_you_like', [BannerController::class, 'videoes_may_you_li
 
 Route::post('lesson_by_id', [LessonController::class, 'lesson_by_id']);
 Route::post('add_lesson_attachment', [LessonController::class, 'add_lesson_attachment']);
+
+Route::post('quiz_details', [QuizController::class, 'quiz_details']);
+Route::post('start_quiz', [QuizController::class, 'start_quiz']);
+Route::post('end_quiz', [QuizController::class, 'end_quiz']);
 
 Route::post('replies', [CommentController::class, 'replies']);
 Route::post('add_comment', [CommentController::class, 'add_comment']);

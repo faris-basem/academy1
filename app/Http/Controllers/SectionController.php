@@ -11,7 +11,7 @@ class SectionController extends Controller
 {
     public function section_by_id(Request $request)
     {
-        $sec=Section::where('id',$request->section_id)->with('lessons')->first();
+        $sec=Section::where('id',$request->section_id)->with('lessons.quizzes')->first();
         $sub=Code::where('user_id',Auth::guard('api')->user()->id)->where('course_id', $sec->course_id)->first();
         if($sub){
             return response()->json([

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Quiz;
 use App\Models\Comment;
 use App\Models\LessonAttachment;
 use Illuminate\Database\Eloquent\Model;
@@ -20,6 +21,10 @@ class Lesson extends Model
     public function comments()
     {
         return $this->hasMany(Comment::class,'lesson_id');
+    }
+    public function quizzes()
+    {
+        return $this->hasMany(Quiz::class,'lesson_id');
     }
 
 }
