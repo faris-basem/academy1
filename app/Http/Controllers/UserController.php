@@ -157,6 +157,21 @@ class UserController extends Controller
 
     }
 
+    public function change_pfp(Request $request)
+    {
+        $u=User::where('id',Auth::guard('api')->user()->id)->first();
+        $pfp=$request->file('profile_picture');
+        $pfp_name=$pfp->getClientOriginalName();
+        $u->img= asset('Attachments/Verify_Attachments/' . Auth::guard('api')->user()->id . '/' . $pfp_name);
+        $u->save();
+        $pfp->move(public_path('Attachments/Verify_Attachments/' . Auth::guard('api')->user()->id), $pfp_name);
+        return response()->json([
+            'message' => 'Picture Changed Successfully',
+            'code' => 200,
+            'status' => true,
+        ]);
+    }
+
     public function forgot(Request $request)
     {
         $ran = Str::random(6);

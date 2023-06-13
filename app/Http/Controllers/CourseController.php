@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Code;
+use App\Models\Quiz;
+use App\Models\User;
 use App\Models\Level;
 use App\Models\Course;
 use App\Models\Lesson;
@@ -99,6 +101,22 @@ class CourseController extends Controller
             'code' => 200,
             'status' => true,
             'data' => $co,
+        ]);
+    }
+
+    public function leaderboard(Request $request)
+    {
+        $std_points = StudentPoint::where('course_id', $request->course_id)->orderBy('points','desc')->paginate(20);
+        foreach($std_points as $std_point){
+            $u= User::where('id',$std_point->user_id)->first();
+            $std_point['student_name']=$u->name;
+            $std_point['profile_picture']=$u->img;
+        }
+        return response()->json([
+            'message' => 'Data Fetched Successfully',
+            'code' => 200,
+            'status' => true,
+            'data' => $std_points,
         ]);
     }
 }

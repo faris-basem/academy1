@@ -26,6 +26,7 @@ Route::post('logout',[UserController::class,'logout']);
 Route::post('forgot',[UserController::class,'forgot']);
 Route::post('change_pass',[UserController::class,'chang_pass']);
 Route::post('verify',[UserController::class,'verify']);
+Route::post('change_pfp',[UserController::class,'change_pfp']);
 
 Route::get('wellcome',[BannerController::class, 'wellcom']);
 Route::get('banner', [BannerController::class, 'banner']);
@@ -40,6 +41,7 @@ Route::post('get_courses_from_levels', [CourseController::class, 'get_courses_fr
 Route::post('course_by_id', [CourseController::class, 'course_by_id']);
 Route::get('my_courses', [CourseController::class, 'my_courses']);
 Route::get('latest_courses', [CourseController::class, 'latest_courses']);
+Route::post('leaderboard', [CourseController::class, 'leaderboard']);
 
 Route::post('section_by_id', [SectionController::class, 'section_by_id']);
 
