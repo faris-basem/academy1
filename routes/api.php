@@ -11,6 +11,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\SectionController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
 
 
@@ -42,6 +43,12 @@ Route::post('course_by_id', [CourseController::class, 'course_by_id']);
 Route::get('my_courses', [CourseController::class, 'my_courses']);
 Route::get('latest_courses', [CourseController::class, 'latest_courses']);
 Route::post('leaderboard', [CourseController::class, 'leaderboard']);
+
+Route::get('my_group', [StudentController::class, 'my_group']);
+Route::get('my_exams', [StudentController::class, 'my_exams']);
+Route::get('my_lectures', [StudentController::class, 'my_lectures']);
+Route::get('installments', [StudentController::class, 'installments']);
+Route::get('std_performance', [StudentController::class, 'std_performance']);
 
 Route::post('section_by_id', [SectionController::class, 'section_by_id']);
 
