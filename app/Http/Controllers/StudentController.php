@@ -102,7 +102,7 @@ class StudentController extends Controller
             $ex['failing'] = $exam->where('status', 'راسب')->count();
             $ex['absence'] = $exam->where('status', 'غياب')->count();
             $inst['all'] = $installments->deserved;
-            $inst['paid'] = $installments->deserved - $installments->remain;
+            $inst['paid'] = strval($installments->deserved - $installments->remain);
             $inst['remains'] = $installments->remain;
 
 

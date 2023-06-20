@@ -10,6 +10,7 @@ use App\Http\Controllers\BannerController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\Parent1Controller;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
@@ -28,6 +29,9 @@ Route::post('forgot',[UserController::class,'forgot']);
 Route::post('change_pass',[UserController::class,'chang_pass']);
 Route::post('verify',[UserController::class,'verify']);
 Route::post('change_pfp',[UserController::class,'change_pfp']);
+
+Route::post('parent_login',[Parent1Controller::class,'parent_login']);
+Route::post('parent_logout',[Parent1Controller::class,'parent_logout']);
 
 Route::get('wellcome',[BannerController::class, 'wellcom']);
 Route::get('banner', [BannerController::class, 'banner']);
