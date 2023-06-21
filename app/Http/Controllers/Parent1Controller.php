@@ -50,19 +50,27 @@ class Parent1Controller extends Controller
                 ]);
             }
         } else if ($user) {
-            $p = new Parent1;
-            $p->phone = $user->parent_phone;
-            $p->std_phone = $user->phone;
-            $p->save();
-            $accessToken = $p->createToken('ParentAuthToken')->accessToken;
-
-            return response([
-                'code' => 200,
-                'status' => true,
-                'message' => 'login Successfully',
-                'user' => $p,
-                'access_token' => $accessToken
-            ]);
+            if($user->parent_phone==$request->phone){
+                $p = new Parent1;
+                $p->phone = $user->parent_phone;
+                $p->std_phone = $user->phone;
+                $p->save();
+                $accessToken = $p->createToken('ParentAuthToken')->accessToken;
+    
+                return response([
+                    'code' => 200,
+                    'status' => true,
+                    'message' => 'login Successfully',
+                    'user' => $p,
+                    'access_token' => $accessToken
+                ]);
+            }else {
+                return response([
+                    'status' => false,
+                    'message' => 'Make sure that the information is correct',
+                    'code' => 422
+                ]);
+            }
         } else {
             return response()->json(
                 [
