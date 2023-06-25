@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Models\Code;
 use App\Models\Quiz;
@@ -11,6 +11,7 @@ use App\Models\Lesson;
 use App\Models\Section;
 use App\Models\StudentPoint;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class CourseController extends Controller

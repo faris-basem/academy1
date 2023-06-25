@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Models\Code;
 use App\Models\Lesson;
 use App\Models\Replie;
 use App\Models\Comment;
+use App\Models\Section;
 use App\Models\Commetlike;
 use App\Models\ReplieLike;
 use Illuminate\Http\Request;
 use App\Models\LessonAttachment;
-use App\Models\Section;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class LessonController extends Controller

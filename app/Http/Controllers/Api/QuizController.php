@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Models\Quiz;
 use App\Models\Answer;
 use App\Models\Course;
 use App\Models\Lesson;
-use App\Models\Quiz;
 use App\Models\MyQuiz;
-use App\Models\Question;
 use App\Models\Section;
+use App\Models\Question;
 use App\Models\StudentPoint;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class QuizController extends Controller
