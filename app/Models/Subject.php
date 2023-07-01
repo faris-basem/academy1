@@ -10,4 +10,9 @@ class Subject extends Model
     use HasFactory;
     protected $table = 'subjects';
     protected $guarded = [];
+
+    public function levels()
+    {
+        return $this->hasMany(Level::class,'subject_id');
+    }
 }
