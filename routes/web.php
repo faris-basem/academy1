@@ -24,3 +24,7 @@ Route::get('subject_levels/{sub}', [SubjectController::class, 'subject_levels'])
 
 Route::post('store_subject',  [SubjectController::class , 'store_subject'])->name('store_subject');
 Route::post('delete_subject',  [SubjectController::class , 'delete_subject'])->name('delete_subject');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
