@@ -10,4 +10,9 @@ class Level extends Model
     use HasFactory;
     protected $table = 'levels';
     protected $guarded = [];
+
+    public function courses()
+    {
+        return $this->hasMany(Course::class,'level_id');
+    }
 }

@@ -248,18 +248,9 @@
             serverSide: true,
             ajax: "{{ route('get_subjects_data') }}",
             columns: [
-                {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false,
-                    render: function (data, type, row, meta) {
-                        // Auto-increment the ID column starting from 1
-                        return meta.row + meta.settings._iDisplayStart + 1;
-                    }
-                },
+                {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
                 {data: 'name', name: 'name'},
-                {data: 'levels',name:'levels',
-                    render:function(data,type,row){
-                        var sub=row.id
-                        return '<a href="subject_levels/'+sub+'"calss="levels-link">'+data+'</a>';
-                }},
+                {data: 'levels',name:'levels'},
                 {data: 'action'},
                 //{data: 'actions', name: 'actions', orderable: false, searchable: false},
             ],

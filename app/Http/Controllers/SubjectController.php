@@ -5,12 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Level;
 use App\Models\Subject;
 use Illuminate\Http\Request;
-use Yajra\DataTables\Facades\DataTables;
+use Yajra\DataTables\DataTables;
 
 class SubjectController extends Controller
 {
     public function show_subjects(){
-        return view('show_subjects');
+        return view('subjects.index');
     }
     public function get_subjects_data()
     {
@@ -19,12 +19,15 @@ class SubjectController extends Controller
         return DataTables::of($subjects)
             ->addIndexColumn()
             ->addColumn('levels',function($subjects){
-                return $subjects->levels->count();
+                $l=$subjects->levels->count();
+                return '<a href="'.route('show_levels',$subjects->id).'"class="levels-link">'.$l.'</a>';
             })
             ->addColumn('action', function ($subjects) {
-                return view('buttons.actions',compact('subjects'));
+                return view('subjects.buttons.actions',compact('subjects'));
             })
-            ->toJson();
+            ->rawColumns(['levels'])
+
+            ->make(true);
     }
 
     public function store_subject(Request $request){
@@ -34,7 +37,9 @@ class SubjectController extends Controller
         $subject=new Subject();
         $subject->name = $request->name;
         $subject->save();        
-        return response()->json([]);
+        return response()->json([
+            'message'=>'add success'
+        ]);
     }
 
     public function edit_subject(Request $request){
@@ -55,8 +60,4 @@ class SubjectController extends Controller
         return response()->json(['message'=>'deleted successfully']);
     }
 
-    public function subject_levels($id){
-        $lev=Level::where('subject_id',$id)->get();
-        return view('subject_levels',compact('lev'));
-    }
 }
