@@ -18,6 +18,7 @@
 
     <button class="btn btn-outline-primary" style="display: none" onclick="msg_add()" id="position-top-start"></button>
     <button class="btn btn-outline-primary" style="display: none" onclick="msg_delete()"id="position-top-start_delete"></button>
+    <button class="btn btn-outline-primary" style="display: none" onclick="msg_edit()"id="position-top-start_edit"></button>
 
     <a class="btn btn-primary" data-toggle="modal" href="#inlineForm" style="margin-bottom:1%">إضافة مادة</a>
 
@@ -48,7 +49,7 @@
         </div>
     </div>
 
-
+    {{-- add subject --}}
     <div class="form-modal-ex" id="modal_add">
         <div class="modal fade text-left" id="inlineForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33"
             aria-hidden="true">
@@ -77,6 +78,43 @@
                             <button type="button" style="display: none" id="add_subject2"
                                 class="btn btn-primary btn-block">جاري الإضافة ...</button>
                             <button type="button" id="add_subject" class="btn btn-primary btn-block">إضافة</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- edit subject --}}
+    <div class="form-modal-ex">
+        <div class="modal fade text-left" id="edit_subject" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel33"> تعديل مادة</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form id="edit_subject_form">
+                        @csrf
+                        <div class="modal-body">
+                            <input type="hidden" name="id" id="id2">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label style="font-size:20px">إسم المادة </label>
+                                    <div class="form-group">
+                                        <input type="name" name="name" id="name2" class="form-control" />
+                                        <span id="name_error" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" style="display: none" id="edit_subject2"
+                                class="btn btn-primary btn-block">جاري التعديل ...</button>
+                            <button type="button" id="edit_subject1" class="btn btn-primary btn-block" onclick="do_edit()">تعديل</button>
                         </div>
                     </form>
                 </div>
@@ -120,6 +158,21 @@
             position: 'top-start',
             icon: 'success',
             title: 'تمت الإضافة بنجاح',
+            showConfirmButton: false,
+            timer: 1500,
+            customClass: {
+                confirmButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        });
+
+    }
+    function msg_edit() {
+
+        Swal.fire({
+            position: 'top-start',
+            icon: 'success',
+            title: 'تم التعديل بنجاح',
             showConfirmButton: false,
             timer: 1500,
             customClass: {
@@ -214,6 +267,47 @@
         });
     });
     
+    </script>
+
+    {{-- edit subject--}}
+    <script>
+        $('#edit_subject').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget)
+            var id     =  button.data('id')
+            var name     =  button.data('name')
+            var modal = $(this)
+            modal.find('.modal-body #id2').val(id);
+            modal.find('.modal-body #name2').val(name);
+        })
+    </script>
+    <script>
+        function do_edit(){
+            $("#edit_subject1").css("display", "none");
+            $("#edit_subject2").css("display", "block");
+            var formData = new FormData($('#edit_subject_form')[0]);
+            $.ajax({
+                type: 'post',
+                url: "{{route('edit_subject')}}",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    $('.yajra-datatable').DataTable().ajax.reload(null, false);
+                    $("#edit_subject2").css("display", "none");
+                    $("#edit_subject1").css("display", "block");
+                    $('.close').click();
+                    $('#position-top-start_edit').click();
+                    $('#name2').val('');
+                }, error: function (reject) {
+                    $("#edit_subject2").css("display", "none");
+                    $("#edit_subject1").css("display", "block");
+                    var response = $.parseJSON(reject.responseText);
+                    $.each(response.errors, function(key, val) {
+                    $("#" + key + "_error").text(val[0]);
+                });
+                }
+            });
+    }
     </script>
 
     {{-- delete subject--}}

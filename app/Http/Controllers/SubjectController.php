@@ -26,6 +26,7 @@ class SubjectController extends Controller
             })
             ->toJson();
     }
+
     public function store_subject(Request $request){
         $request->validate([
             'name'   => 'required',
@@ -35,10 +36,25 @@ class SubjectController extends Controller
         $subject->save();        
         return response()->json([]);
     }
+
+    public function edit_subject(Request $request){
+        $request->validate([
+            'name'   => 'required',
+        ]);
+        $sub=Subject::where('id',$request->id)->first();
+        $sub->name=$request->name;
+        $sub->save();        
+        return response()->json([
+            'message'=>'edited success'
+        ]);
+
+    }
+
     public function delete_subject(Request $request){
         $s=Subject::where('id',$request->id)->delete();
         return response()->json(['message'=>'deleted successfully']);
     }
+
     public function subject_levels($id){
         $lev=Level::where('subject_id',$id)->get();
         return view('subject_levels',compact('lev'));
