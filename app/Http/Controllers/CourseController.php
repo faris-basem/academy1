@@ -34,7 +34,7 @@ class CourseController extends Controller
              ->addColumn('sections',function($data){
                 $s= $data->sections->count();
                 // return '<a href="'.route('level_sections').'"class="levels-link">'.$data->sections->count().'</a>';
-                 return '<a href="" class="levels-link">'.$s.'</a>';
+                 return '<a href="'.route('show_sections',$data->id).'" class="levels-link">'.$s.'</a>';
              })
              ->addColumn('img',function($data){
                 return '<img style="width:100px" src="'.$data->img.'"></img>';
