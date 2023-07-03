@@ -15,4 +15,11 @@ class Level extends Model
     {
         return $this->hasMany(Course::class,'level_id');
     }
+
+    public function subject()
+    {
+        return $this->belongsTo(Subject::class);
+    }
+
+
 }

@@ -33,9 +33,9 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>name</th>
-                                <th>levels</th>
-                                <th>action</th>
+                                <th>اسم المادة</th>
+                                <th>المراحل</th>
+                                <th>العمليات</th>
                             </tr>
                         </thead>
                         <tbody>

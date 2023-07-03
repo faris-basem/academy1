@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LevelController;
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\SubjectController;
 
 /*
@@ -35,6 +36,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('store_level',   [LevelController::class , 'store_level' ])->name('store_level' );
     Route::post('edit_level',    [LevelController::class , 'edit_level'  ])->name('edit_level'  );
     Route::post('delete_level',  [LevelController::class , 'delete_level'])->name('delete_level');
+
+    Route::get('show_courses/{level_id?}',    [CourseController::class, 'show_courses'])->name('show_courses');
+    Route::get('get_courses_data/{level_id?}',[CourseController::class, 'get_courses_data'])->name('get_courses_data');
+    Route::post('store_course',   [CourseController::class , 'store_course' ])->name('store_course' );
+    Route::post('edit_course',    [CourseController::class , 'edit_course'  ])->name('edit_course'  );
+    Route::post('delete_course',  [CourseController::class , 'delete_course'])->name('delete_course');
     
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 });

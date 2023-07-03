@@ -40,6 +40,8 @@
             </li>
             <li class=" nav-item"><a class="d-flex align-items-center" href="{{ route('show_levels') }}"><i data-feather="message-square"></i><span class="menu-title text-truncate" data-i18n="Chat">المراحل</span></a>
             </li>
+            <li class=" nav-item"><a class="d-flex align-items-center" href="{{ route('show_courses') }}"><i data-feather="message-square"></i><span class="menu-title text-truncate" data-i18n="Chat">الكورسات</span></a>
+            </li>
         </ul>
     </div>
 </div>

@@ -34,7 +34,7 @@ class LevelController extends Controller
             ->addColumn('courses',function($data){
                 $count_courses = Course::where('level_id',$data->id)->count();
                 // return '<a href="'.route('level_courses').'"class="levels-link">'.$count_courses.'</a>';
-                return '<a href=""class="levels-link">'.$count_courses.'</a>';
+                return '<a href="'.route('show_courses',$data->id).'"class="levels-link">'.$count_courses.'</a>';
             })
             ->addColumn('action', function ($data) {
                 return view('levels.buttons.actions',compact('data'));
@@ -75,10 +75,5 @@ class LevelController extends Controller
         return response()->json([
             'message'=>'deleted successfully'
         ]);
-    }
-
-    public function subject_levels($id){
-        $lev=Level::where('subject_id',$id)->get();
-        return view('subject_levels',compact('lev'));
     }
 }

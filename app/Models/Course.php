@@ -11,4 +11,8 @@ class Course extends Model
     protected $table = 'courses';
     protected $guarded = [];
 
+    public function sections()
+    {
+        return $this->hasMany(Section::class,'course_id');
+    }
 }
