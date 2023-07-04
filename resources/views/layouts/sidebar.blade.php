@@ -43,6 +43,10 @@
             <li class=" nav-item"><a class="d-flex align-items-center" href="{{ route('show_courses') }}"><i data-feather="message-square"></i><span class="menu-title text-truncate" data-i18n="Chat">الكورسات</span></a>
             </li>
             <li class=" nav-item"><a class="d-flex align-items-center" href="{{ route('show_sections') }}"><i data-feather="message-square"></i><span class="menu-title text-truncate" data-i18n="Chat">الأقسام</span></a>
+            </li>
+            <li class=" nav-item"><a class="d-flex align-items-center" href="{{ route('show_lessons') }}"><i data-feather="message-square"></i><span class="menu-title text-truncate" data-i18n="Chat">الدروس</span></a>
+            </li>
+
         </ul>
     </div>
 </div>

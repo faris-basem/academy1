@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\LessonController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\SubjectController;
 
@@ -49,6 +50,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('store_section',   [SectionController::class , 'store_section' ])->name('store_section' );
     Route::post('edit_section',    [SectionController::class , 'edit_section'  ])->name('edit_section'  );
     Route::post('delete_section',  [SectionController::class , 'delete_section'])->name('delete_section');
+
+    Route::get('show_lessons/{section_id?}',    [LessonController::class, 'show_lessons'])->name('show_lessons');
+    Route::get('get_lessons_data/{section_id?}',[LessonController::class, 'get_lessons_data'])->name('get_lessons_data');
+    Route::post('store_lesson',   [LessonController::class , 'store_lesson' ])->name('store_lesson' );
+    Route::post('edit_lesson',    [LessonController::class , 'edit_lesson'  ])->name('edit_lesson'  );
+    Route::post('delete_lesson',  [LessonController::class , 'delete_lesson'])->name('delete_lesson');
     
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 });

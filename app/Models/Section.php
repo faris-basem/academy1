@@ -16,4 +16,9 @@ class Section extends Model
     {
         return $this->hasMany(Lesson::class,'section_id');
     }
+
+    public function course()
+    {
+        return $this->belongsTo(Course::class);
+    }
 }
