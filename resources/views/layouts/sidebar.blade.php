@@ -46,6 +46,8 @@
             </li>
             <li class=" nav-item"><a class="d-flex align-items-center" href="{{ route('show_lessons') }}"><i data-feather="message-square"></i><span class="menu-title text-truncate" data-i18n="Chat">الدروس</span></a>
             </li>
+            <li class=" nav-item"><a class="d-flex align-items-center" href="{{ route('show_attachments') }}"><i data-feather="message-square"></i><span class="menu-title text-truncate" data-i18n="Chat">المرفقات</span></a>
+            </li>
 
         </ul>
     </div>

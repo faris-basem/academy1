@@ -47,7 +47,7 @@ class LessonController extends Controller
             })
             ->addColumn('attachments',function($data){
                 
-                return '<a href="" class="btn btn-sm btn-primary">'.$data->attachment->count().'</a>';
+                return '<a href="'.route('show_attachments',$data->id).'" class="btn btn-sm btn-primary">'.$data->attachment->count().'</a>';
             })
              ->addColumn('action', function ($data) {
                  return view('lessons.buttons.actions',compact('data'));

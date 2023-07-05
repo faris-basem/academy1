@@ -7,6 +7,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\LessonAttachmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,6 +57,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('store_lesson',   [LessonController::class , 'store_lesson' ])->name('store_lesson' );
     Route::post('edit_lesson',    [LessonController::class , 'edit_lesson'  ])->name('edit_lesson'  );
     Route::post('delete_lesson',  [LessonController::class , 'delete_lesson'])->name('delete_lesson');
+
+    Route::get('show_attachments/{lesson_id?}',    [LessonAttachmentController::class, 'show_attachments'])->name('show_attachments');
+    Route::get('get_attachments_data/{lesson_id?}',[LessonAttachmentController::class, 'get_attachments_data'])->name('get_attachments_data');
+    Route::post('store_attachment',   [LessonAttachmentController::class , 'store_attachment' ])->name('store_attachment' );
+    Route::post('edit_attachment',    [LessonAttachmentController::class , 'edit_attachment'  ])->name('edit_attachment'  );
+    Route::post('delete_attachment',  [LessonAttachmentController::class , 'delete_attachment'])->name('delete_attachment');
     
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 });

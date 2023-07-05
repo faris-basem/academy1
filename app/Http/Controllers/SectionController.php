@@ -33,7 +33,7 @@ class SectionController extends Controller
              ->addColumn('lessons',function($data){
                 $s= $data->lessons->count();
                 // return '<a href="'.route('course_sections').'"class="courses-link">'.$data->sections->count().'</a>';
-                 return '<a href="" class="courses-link">'.$s.'</a>';
+                 return '<a href="'.route('show_lessons',$data->id).'" class="courses-link">'.$s.'</a>';
              })
              ->addColumn('action', function ($data) {
                  return view('sections.buttons.actions',compact('data'));

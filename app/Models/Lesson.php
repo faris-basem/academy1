@@ -27,4 +27,9 @@ class Lesson extends Model
         return $this->hasMany(Quiz::class,'lesson_id');
     }
 
+    public function section()
+    {
+        return $this->belongsTo(Section::class);
+    }
+
 }
