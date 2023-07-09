@@ -7,6 +7,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\LessonQuizController;
 use App\Http\Controllers\LessonAttachmentController;
 
 /*
@@ -63,6 +64,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('store_attachment',   [LessonAttachmentController::class , 'store_attachment' ])->name('store_attachment' );
     Route::post('edit_attachment',    [LessonAttachmentController::class , 'edit_attachment'  ])->name('edit_attachment'  );
     Route::post('delete_attachment',  [LessonAttachmentController::class , 'delete_attachment'])->name('delete_attachment');
+    
+    Route::get('show_quizzes/{lesson_id?}',    [LessonQuizController::class, 'show_quizzes'])->name('show_quizzes');
+    Route::get('get_quizzes_data/{lesson_id?}',[LessonQuizController::class, 'get_quizzes_data'])->name('get_quizzes_data');
+    Route::post('store_quiz',   [LessonQuizController::class , 'store_quiz' ])->name('store_quiz' );
+    Route::post('edit_quiz',    [LessonQuizController::class , 'edit_quiz'  ])->name('edit_quiz'  );
+    Route::post('delete_quiz',  [LessonQuizController::class , 'delete_quiz'])->name('delete_quiz');
     
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 });

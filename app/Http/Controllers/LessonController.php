@@ -43,7 +43,7 @@ class LessonController extends Controller
             })
             ->addColumn('exams',function($data){
                 
-                return '<a href="" class="btn btn-sm btn-primary">'.$data->quizzes->count().'</a>';
+                return '<a href="'.route('show_quizzes',$data->id).'" class="btn btn-sm btn-primary">'.$data->quizzes->count().'</a>';
             })
             ->addColumn('attachments',function($data){
                 

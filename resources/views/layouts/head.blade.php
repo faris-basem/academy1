@@ -43,6 +43,10 @@
         *{
             font-family: 'Cairo', sans-serif;
         }
+
+        tbody{
+            color: black;
+        }
     </style>
     <!-- END: Custom CSS-->
     @yield('css')

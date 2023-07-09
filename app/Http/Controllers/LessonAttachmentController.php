@@ -31,7 +31,7 @@ class LessonAttachmentController extends Controller
                  return $s->name.' ( '.$s->section->name.' ) ' ??'-';
              })
              ->addColumn('file_link',function($data){
-                return '<a href="'.$data->file_link.'" class="btn btn-sm btn-primary" target="_blank">'.'إضغط لعرض المرفق'.'</a>';
+                return '<a href="'.$data->file_link.'" class="btn btn-sm btn-primary" target="_blank"><i class="fa-solid fa-eye"></i>&nbsp'.'عرض المرفق'.'</a> &nbsp'.' <a href="'.$data->file_link.'" download class="btn btn-sm btn-success" target="_blank"><i class="fas fa-download"></i>&nbsp'.'تحميل المرفق'.'</a>';
              })
              
              ->addColumn('action', function ($data) {
