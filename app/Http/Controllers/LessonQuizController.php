@@ -46,7 +46,7 @@ class LessonQuizController extends Controller
                  return $s->name.' ( '.$s->section->name.' ) ' ??'-';
              })
              ->addColumn('question_num',function($data){
-                 return '<a href="'.route('show_quizzes',$data->lesson_id).'" class="btn btn-sm btn-primary">'.$data->question_num.'</a>';
+                 return '<a href="'.route('show_questions',$data->id).'" class="btn btn-sm btn-primary">'.$data->question_num.'</a>';
              })
              
              ->addColumn('action', function ($data) {

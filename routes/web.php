@@ -7,6 +7,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\LessonQuizController;
 use App\Http\Controllers\LessonAttachmentController;
 
@@ -70,6 +71,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('store_quiz',   [LessonQuizController::class , 'store_quiz' ])->name('store_quiz' );
     Route::post('edit_quiz',    [LessonQuizController::class , 'edit_quiz'  ])->name('edit_quiz'  );
     Route::post('delete_quiz',  [LessonQuizController::class , 'delete_quiz'])->name('delete_quiz');
+
+    Route::get('show_questions/{quiz_id}',    [QuestionController::class, 'show_questions'])->name('show_questions');
+    Route::get('get_questions_data/{quiz_id}',[QuestionController::class, 'get_questions_data'])->name('get_questions_data');
+    Route::post('store_question/{quiz_id}',   [QuestionController::class , 'store_question' ])->name('store_question' );
+    Route::post('edit_question',    [QuestionController::class , 'edit_question'  ])->name('edit_question'  );
+    Route::post('delete_question',  [QuestionController::class , 'delete_question'])->name('delete_question');
     
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 });
