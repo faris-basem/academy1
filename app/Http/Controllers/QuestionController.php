@@ -29,12 +29,12 @@ class QuestionController extends Controller
                  return $s->name.' ( '.$s->lesson->name.' ) ' ??'-';
              })
              ->addColumn('answers',function($data){
-                 return $data->answers->count();
+                return '<a href="'.route('show_answers',$data->id).'" class="btn btn-sm btn-primary">'.$data->answers->count().'</a>';
              })
              ->addColumn('action', function ($data) {
                  return view('lessons.buttons.questionsActions',compact('data'));
              })
-             ->rawColumns(['quiz','answer'])
+             ->rawColumns(['quiz','answers'])
  
              ->make(true);
      }
