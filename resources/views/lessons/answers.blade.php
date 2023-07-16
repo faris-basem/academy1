@@ -69,8 +69,20 @@
                                     <div class="row d-flex align-items-end">
                                         <div class="col-md-8">
                                             <div class="form-group">
-                                                <label for="answer"> الاجابة</label>
-                                                <input type="text" class="form-control" id="answer" name="answer" />
+                                                <label for="question"> الاجابة</label>
+                                                <?php
+                                                    $ques = \App\Models\Question::where('id',$question_id)->first();
+                                                    $quiz = \App\Models\Quiz::where('id',$ques->quiz_id)->first();
+                                                    if ($quiz->input_type=='نص') {
+                                                        ?>
+                                                        <input type="text" class="form-control" id="answer" name="answer" />
+                                                        <?php   
+                                                    } else {
+                                                        ?>
+                                                        <input type="file" class="form-control" id="answer" name="answer" />
+                                                        <?php
+                                                    }
+                                                    ?>
                                             </div>
                                         </div>
                                         <div class="col-md-2">
@@ -137,8 +149,19 @@
                                 <div class="col-md-10">
                                     <label style="font-size:20px"> الاجابة </label>
                                     <div class="form-group">
-                                        <input type="name" name="answer" id="answer2" class="form-control" />
-                                        <span id="name_error" class="text-danger"></span>
+                                        <?php
+                                            $ques = \App\Models\Question::where('id',$question_id)->first();
+                                            $quiz = \App\Models\Quiz::where('id',$ques->quiz_id)->first();
+                                            if ($quiz->input_type=='نص') {
+                                        ?>
+                                                <input type="text" class="form-control" id="answer2" name="answer" />
+                                        <?php   
+                                            } else {
+                                        ?>
+                                                <input type="file" class="form-control" id="answer3" name="answer" />
+                                        <?php
+                                            }
+                                        ?>
                                     </div>
                                 </div>
                                 <div class="col-md-2">
@@ -338,6 +361,7 @@
                     $('.close').click();
                     $('#position-top-start_edit').click();
                     $('#answer2').val('');
+                    $('#answer3').val('');
                     $('#select2').val('');
                 }, error: function (reject) {
                     $("#edit_answer2").css("display", "none");

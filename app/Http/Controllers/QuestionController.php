@@ -46,26 +46,64 @@ class QuestionController extends Controller
              'questions.*.question'   => 'required',
              ]);
 
-        foreach($request->questions as $q){
 
-            $question1=new Question();
-            $question1->question = $q['question'];
-            $question1->quiz_id = $quiz_id;
-            $question1->save();
-        }
+             if($request->hasFile('questions.*.question')){
+                $quest=$request->file('questions');
+                foreach($quest as $q){
+                    $image_file = $q['question'];
+                    $question_name = 'question_' . time() . '_' . uniqid() . '.' . $image_file->getClientOriginalExtension();
+                    $question1=new Question();
+
+                    $question_path = 'Attachments/' . 'questions/' . $quiz_id;
+
+                    $question1->question = asset($question_path . '/' . $question_name);
+
+                    $question1->quiz_id = $quiz_id;
+                    
+                    $question1->save();
+                    
+                    $image_file->move(public_path($question_path), $question_name);
+                }
+            }else{
+
+                foreach($request->questions as $q){
+
+
+                    $question1=new Question();
+                    $question1->quiz_id = $quiz_id;
         
+                    $question1->question = $q['question'];
+                    $question1->save();
+                    
+                }
+            }
+
         return response()->json([
             'message'=>'add success'
         ]);
     }
 
     public function edit_question(Request $request){
+
         $request->validate([
-            'question'    => 'required',
+            'question' => 'required',
         ]);
-        $question=Question::where('id',$request->id)->first();
-        $question->question = $request->question;
-        $question->save();        
+    
+        if ($request->hasFile('question')) {
+            $question_file = $request->file('question');
+            $question_name = 'question_' . time() . '_' . uniqid() . '.' . $question_file->getClientOriginalExtension();
+    
+            $questionAttachment = Question::where('id', $request->id)->first();
+            $question_path = 'Attachments/' . 'questions/' . $questionAttachment->quiz_id;
+            $questionAttachment->question = asset($question_path . '/' . $question_name);
+            $questionAttachment->save();
+    
+            $question_file->move(public_path($question_path), $question_name);
+        } else {
+            $question = Question::where('id', $request->id)->first();
+            $question->question = $request->question;
+            $question->save();
+        }
         return response()->json([
             'message'=>'edited success'
         ]);

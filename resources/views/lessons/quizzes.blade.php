@@ -35,6 +35,7 @@
                                 <th>#</th>
                                 <th>اسم الاختبار</th>
                                 <th>اسم الدرس</th>
+                                <th>نوع المدخلات</th>
                                 <th>نوع الاختبار</th>
                                 <th>مدة الاختبار</th>
                                 <th>عدد الأسئلة</th>
@@ -80,17 +81,27 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="exampleFormControlSelect1">إسم الدرس</label>
-                                <select name="lesson_id" class="form-control" id="exampleFormControlSelect1">
-                                    <?php $lessons = \App\Models\Lesson::with('section')->get(); ?>
-                                    
-                                    <option selected disabled>اختر قسم</option>
-                                    @foreach($lessons as $lesson)
-                                        <option value="{{ $lesson->id }}">{{ $lesson->name}} ({{ $lesson->section->name}})</option>
-                                    @endforeach
-                                    
-                                </select>
+                            <div class="row form-group">
+                                <div class="col-md-6">
+                                    <label for="exampleFormControlSelect1" style="font-size:20px">إسم الدرس</label>
+                                    <select name="lesson_id" class="form-control" id="exampleFormControlSelect1">
+                                        <?php $lessons = \App\Models\Lesson::with('section')->get(); ?>
+                                        
+                                        <option selected disabled>اختر قسم</option>
+                                        @foreach($lessons as $lesson)
+                                            <option value="{{ $lesson->id }}">{{ $lesson->name}} ({{ $lesson->section->name}})</option>
+                                        @endforeach
+                                        
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="exampleFormControlSelect2" style="font-size:20px">نوع المدخلات</label>
+                                    <select name="input_type" class="form-control" id="exampleFormControlSelect2">                                        
+                                        <option selected disabled>اختر نوع</option>
+                                        <option value="نص">نصي</option>
+                                        <option value="صورة">صور</option>                                        
+                                    </select>
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
@@ -186,16 +197,26 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label style="font-size:20px">إسم الدرس</label>
-                                <select name="lesson_id" class="form-control" id="select2">
-                                    <?php $lessons = \App\Models\Lesson::with('section')->get(); ?>
-                                    
-                                    <option selected disabled>اختر درس</option>
-                                    @foreach($lessons as $lesson)
-                                        <option value="{{ $lesson->id }}">{{ $lesson->name}} ({{ $lesson->section->name}})</option>
-                                    @endforeach
-                                </select>
+                            <div class="row form-group">
+                                <div class="col-md-6">
+                                    <label style="font-size:20px">إسم الدرس</label>
+                                    <select name="lesson_id" class="form-control" id="select2">
+                                        <?php $lessons = \App\Models\Lesson::with('section')->get(); ?>
+                                        
+                                        <option selected disabled>اختر درس</option>
+                                        @foreach($lessons as $lesson)
+                                            <option value="{{ $lesson->id }}">{{ $lesson->name}} ({{ $lesson->section->name}})</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="select3" style="font-size:20px">نوع المدخلات</label>
+                                    <select name="input_type" class="form-control" id="select3">
+                                        <option value="نص">نصي</option>
+                                        <option value="صورة">صور</option>                                        
+                                    </select>
+                                </div>
+
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
@@ -370,6 +391,7 @@
                 $('#position-top-start').click(); // Trigger the button click
                 $('#name').val('');
                 $('#exampleFormControlSelect1').val('');
+                $('#exampleFormControlSelect2').val('');
                 $('#type').val('');
                 $('#time').val('');
                 $('#question_num').val('');
@@ -407,6 +429,7 @@
                 {data: 'DT_RowIndex',  name: 'DT_RowIndex', orderable: false, searchable: false},
                 {data: 'name', name: 'name'},
                 {data: 'lesson', name:'lesson'},
+                {data: 'input_type', name:'input_type'},
                 {data: 'type', name : 'type'},
                 {data: 'time', name : 'time'},
                 {data: 'question_num', name : 'question_num'},
@@ -430,6 +453,7 @@
             var name       = button.data('name')
             var lesson_id   = button.data('lesson_id')
             var type       = button.data('type')
+            var input_type       = button.data('input_type')
             var time       = button.data('time')
             var question_num  = button.data('question_num')
             var attempts= button.data('attempts')
@@ -440,6 +464,7 @@
             modal.find('.modal-body #id2').val(id);
             modal.find('.modal-body #name2').val(name);
             modal.find('.modal-body #select2').val(lesson_id);
+            modal.find('.modal-body #select3').val(input_type);
             modal.find('.modal-body #type2').val(type);
             modal.find('.modal-body #time2').val(time);
             modal.find('.modal-body #question_num2').val(question_num);

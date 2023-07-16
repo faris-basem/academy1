@@ -62,6 +62,7 @@ class LessonQuizController extends Controller
             'name'                  => 'required',
             'lesson_id'             => 'required',
             'type'                  => 'required',
+            'input_type'            => 'required',
             'time'                  => 'required|numeric',
             'question_num'          => 'required|numeric',
             'attempts'              => 'required|numeric',
@@ -73,6 +74,7 @@ class LessonQuizController extends Controller
         $quiz->name = $request->name;
         $quiz->lesson_id = $request->lesson_id;
         $quiz->type = $request->type;
+        $quiz->input_type = $request->input_type;
         $quiz->time = $request->time;
         $quiz->question_num = $request->question_num;
         $quiz->attempts = $request->attempts;
@@ -90,6 +92,7 @@ class LessonQuizController extends Controller
             'name'                  => 'required',
             'lesson_id'             => 'required',
             'type'                  => 'required',
+            'input_type'                  => 'required',
             'time'                  => 'required|numeric',
             'question_num'          => 'required|numeric',
             'attempts'              => 'required|numeric',
@@ -102,6 +105,7 @@ class LessonQuizController extends Controller
         $quiz->name = $request->name;
         $quiz->lesson_id = $request->lesson_id;
         $quiz->type = $request->type;
+        $quiz->input_type = $request->input_type;
         $quiz->time = $request->time;
         $quiz->question_num = $request->question_num;
         $quiz->attempts = $request->attempts;

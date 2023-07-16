@@ -38,21 +38,35 @@ class AnswerController extends Controller
             ->make(true);
     }
 
-    public function store_answer(Request $request,$question_id){
+    public function store_answer(Request $request, $question_id)
+{
+    $request->validate([
+        'answers.*.answer' => 'required',
+    ]);
 
-        $request->validate([
-            'answers.*.answer'   => 'required',
-            ]);
+    $answers = $request->answers;
 
-       foreach($request->answers as $q){
+    foreach ($answers as $index => $q) {
+        $answer1 = new Answer();
+        $answer1->question_id = $question_id;
+        $answer1->answer = $q['answer'];
 
-           $answer1=new answer();
-           $answer1->answer = $q['answer'];
-           $answer1->status = $q['status'];
-           $answer1->question_id = $question_id;
-           $answer1->save();
-       }
-       
+        if ($request->hasFile('answers.'.$index.'.answer')) {
+            $image_file = $request->file('answers.'.$index.'.answer');
+            $answer_name = 'answer_' . time() . '_' . uniqid() . '.' . $image_file->getClientOriginalExtension();
+            $answer1->status = $q['status']; // Set the status from $request->answers
+            $answer_path = 'Attachments/' . 'answers/' . $question_id;
+
+            $image_file->move(public_path($answer_path), $answer_name); // Move the file to the desired location
+
+            $answer1->answer = asset($answer_path . '/' . $answer_name);
+        } else {
+            $answer1->status = $q['status']; // Set the status from $request->answers
+        }
+
+        $answer1->save();
+    }
+   
        return response()->json([
            'message'=>'add success'
        ]);
@@ -63,10 +77,25 @@ class AnswerController extends Controller
         'answer'    => 'required',
         'status'    => 'required',
     ]);
-    $answer=Answer::where('id',$request->id)->first();
-    $answer->answer = $request->answer;
-    $answer->status = $request->status;
-    $answer->save();
+
+    if ($request->hasFile('answer')) {
+        $answer_file = $request->file('answer');
+        $answer_name = 'answer_' . time() . '_' . uniqid() . '.' . $answer_file->getClientOriginalExtension();
+
+        $answerAttachment = Answer::where('id', $request->id)->first();
+        $answer_path = 'Attachments/' . 'answers/' . $answerAttachment->question_id;
+        $answerAttachment->answer = asset($answer_path . '/' . $answer_name);
+        $answerAttachment->status = $request->status;
+        $answerAttachment->save();
+
+        $answer_file->move(public_path($answer_path), $answer_name);
+
+    } else {
+        $answer=Answer::where('id',$request->id)->first();
+        $answer->answer = $request->answer;
+        $answer->status = $request->status;
+        $answer->save();
+    }
     return response()->json([
         'message'=>'edited success'
     ]);

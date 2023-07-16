@@ -71,7 +71,18 @@
                                         <div class="col-md-10 col-12">
                                             <div class="form-group">
                                                 <label for="question"> السؤال</label>
-                                                <input type="text" class="form-control" id="question" name="question" />
+                                                <?php
+                                                    $quiz = \App\Models\Quiz::where('id',$quiz_id)->first();
+                                                    if ($quiz->input_type=='نص') {
+                                                        ?>
+                                                        <input type="text" class="form-control" id="question" name="question" />
+                                                        <?php   
+                                                    } else {
+                                                        ?>
+                                                        <input type="file" class="form-control" id="question" name="question" />
+                                                        <?php
+                                                    }
+                                                    ?>
                                             </div>
                                         </div>
 
@@ -128,8 +139,18 @@
                                 <div class="col-md-12">
                                     <label style="font-size:20px"> السؤال </label>
                                     <div class="form-group">
-                                        <input type="name" name="question" id="question2" class="form-control" />
-                                        <span id="name_error" class="text-danger"></span>
+                                        <?php
+                                            $quiz = \App\Models\Quiz::where('id',$quiz_id)->first();
+                                            if ($quiz->input_type=='نص') {
+                                        ?>
+                                                <input type="text" class="form-control" id="question2" name="question" />
+                                        <?php   
+                                            } else {
+                                        ?>
+                                                <input type="file" class="form-control" id="question3" name="question" />
+                                        <?php
+                                            }
+                                        ?>
                                     </div>
                                 </div>
                             </div>
