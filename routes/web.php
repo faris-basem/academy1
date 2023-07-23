@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\AnswerController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LevelController;
+use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\SectionController;
@@ -84,6 +85,14 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('store_answer/{question_id}',   [AnswerController::class , 'store_answer' ])->name('store_answer' );
     Route::post('edit_answer',    [AnswerController::class , 'edit_answer'  ])->name('edit_answer'  );
     Route::post('delete_answer',  [AnswerController::class , 'delete_answer'])->name('delete_answer');
+
+    Route::get('show_users',    [AdminController::class, 'show_users'])->name('show_users');
+    Route::get('get_users_data',[AdminController::class, 'get_users_data'])->name('get_users_data');
+    Route::get('add_user',   [AdminController::class , 'add_user' ])->name('add_user' );
+    Route::post('store_user',   [AdminController::class , 'store_user' ])->name('store_user' );
+    Route::get('edit_user/{id}',    [AdminController::class , 'edit_user'  ])->name('edit_user'  );
+    Route::post('update_user',    [AdminController::class , 'update'  ])->name('update_user'  );
+    Route::post('delete_user',  [AdminController::class , 'delete_user'])->name('delete_user');
     
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 });
