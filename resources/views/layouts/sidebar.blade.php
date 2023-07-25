@@ -36,6 +36,8 @@
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
             <li class=" nav-item"><a class="d-flex align-items-center" href="{{ route('home') }}"><i data-feather="home"></i><span class="menu-title text-truncate" data-i18n="Home">الرئيسية</span></a>
             </li>
+            <li class=" nav-item"><a class="d-flex align-items-center" href="{{ route('show_students') }}"><i data-feather="message-square"></i><span class="menu-title text-truncate" data-i18n="Chat">الطلاب</span></a>
+            </li>
             @can('عرض المواد')
             <li class=" nav-item"><a class="d-flex align-items-center" href="{{ route('show_subjects') }}"><i data-feather="message-square"></i><span class="menu-title text-truncate" data-i18n="Chat">المواد</span></a>
             </li>

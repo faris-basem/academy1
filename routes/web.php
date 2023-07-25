@@ -9,6 +9,7 @@ use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\SectionController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\LessonQuizController;
@@ -33,11 +34,17 @@ Route::get('/home', function () {
 
 Route::group(['middleware' => ['auth']], function () {
 
+    Route::get('show_students', [StudentController::class, 'show_students'])->name('show_students')->middleware('permission:عرض المواد');
+    Route::get('get_students_data', [StudentController::class, 'get_students_data'])->name('get_students_data')->middleware('permission:عرض المواد');
+    Route::post('delete_student',[StudentController::class , 'delete_student'])->name('delete_student')->middleware('permission:حذف المواد');
+    Route::get('student_courses/{user_id}', [StudentController::class, 'student_courses'])->name('student_courses')->middleware('permission:عرض المواد');
+    Route::get('student_courses_data/{user_id}',[StudentController::class, 'student_courses_data'])->name('student_courses_data')->middleware('permission:عرض المراحل');
+
     Route::get('show_subjects', [SubjectController::class, 'show_subjects'])->name('show_subjects')->middleware('permission:عرض المواد');
     Route::get('get_subjects_data', [SubjectController::class, 'get_subjects_data'])->name('get_subjects_data')->middleware('permission:عرض المواد');
     Route::post('store_subject', [SubjectController::class , 'store_subject' ])->name('store_subject' )->middleware('permission:اضافة المواد');
     Route::post('edit_subject',  [SubjectController::class , 'edit_subject'  ])->name('edit_subject'  )->middleware('permission:تعديل المواد');
-    Route::post('delete_subject',[SubjectController::class , 'delete_subject'])->name('delete_subject')->middleware('permission:حذف مادة');
+    Route::post('delete_subject',[SubjectController::class , 'delete_subject'])->name('delete_subject')->middleware('permission:حذف المواد');
     
     Route::get('show_levels/{subject_id?}',    [LevelController::class, 'show_levels'])->name('show_levels')->middleware('permission:عرض المراحل');
     Route::get('get_levels_data/{subject_id?}',[LevelController::class, 'get_levels_data'])->name('get_levels_data')->middleware('permission:عرض المراحل');
