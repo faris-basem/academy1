@@ -36,18 +36,34 @@
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
             <li class=" nav-item"><a class="d-flex align-items-center" href="{{ route('home') }}"><i data-feather="home"></i><span class="menu-title text-truncate" data-i18n="Home">الرئيسية</span></a>
             </li>
+            @can('عرض المواد')
             <li class=" nav-item"><a class="d-flex align-items-center" href="{{ route('show_subjects') }}"><i data-feather="message-square"></i><span class="menu-title text-truncate" data-i18n="Chat">المواد</span></a>
             </li>
+            @endcan
+            @can('عرض المراحل')
             <li class=" nav-item"><a class="d-flex align-items-center" href="{{ route('show_levels') }}"><i data-feather="message-square"></i><span class="menu-title text-truncate" data-i18n="Chat">المراحل</span></a>
             </li>
+            @endcan
+            @can('عرض الدورات')
             <li class=" nav-item"><a class="d-flex align-items-center" href="{{ route('show_courses') }}"><i data-feather="message-square"></i><span class="menu-title text-truncate" data-i18n="Chat">الكورسات</span></a>
             </li>
+            @endcan
+            @can('عرض الاقسام')
             <li class=" nav-item"><a class="d-flex align-items-center" href="{{ route('show_sections') }}"><i data-feather="message-square"></i><span class="menu-title text-truncate" data-i18n="Chat">الأقسام</span></a>
             </li>
+            @endcan
+            @can('عرض الدروس')
             <li class=" nav-item"><a class="d-flex align-items-center" href="{{ route('show_lessons') }}"><i data-feather="message-square"></i><span class="menu-title text-truncate" data-i18n="Chat">الدروس</span></a>
             </li>
+            @endcan
+            @can('عرض المساعدين')
             <li class=" nav-item"><a class="d-flex align-items-center" href="{{ route('show_users') }}"><i data-feather="message-square"></i><span class="menu-title text-truncate" data-i18n="Chat">المستخدمين</span></a>
             </li>
+            @endcan
+            @can('عرض الصلاحيات')
+            <li class=" nav-item"><a class="d-flex align-items-center" href="{{ route('show_roles') }}"><i data-feather="message-square"></i><span class="menu-title text-truncate" data-i18n="Chat">الصلاحيات</span></a>
+            </li>
+            @endcan
 
         </ul>
     </div>

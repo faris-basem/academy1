@@ -3,7 +3,7 @@
     <!--Internal   Notify -->
     <link href="{{ URL::asset('assets/plugins/notify/css/notifIt.css') }}" rel="stylesheet" />
 @section('title')
-    صلاحيات المستخدمين - مورا سوفت للادارة القانونية
+    صلاحيات المستخدمين 
 @stop
 
 
@@ -67,11 +67,12 @@
                 <div class="d-flex justify-content-between">
                     <div class="col-lg-12 margin-tb">
                         <div class="pull-right">
-                            @can('اضافة صلاحية')
-                                <a class="btn btn-primary btn-sm" href="{{ route('create_role') }}">اضافة</a>
+                            @can('اضافة الصلاحيات')
+                                <a class="btn btn-primary btn-sm" href="{{ route('add_role') }}">اضافة صلاحية</a>
                             @endcan
                         </div>
                     </div>
+                    <br>
                     <br>
                 </div>
 
@@ -89,25 +90,25 @@
                         <tbody>
                             @foreach ($roles as $key => $role)
                                 <tr>
-                                    <td>{{ ++$i }}</td>
+                                    <td>{{ ++$key }}</td>
                                     <td>{{ $role->name }}</td>
                                     <td>
-                                        @can('عرض صلاحية')
+                                        @can('عرض الصلاحيات')
                                             <a class="btn btn-success btn-sm"
-                                                href="{{ route('show_role', $role->id) }}">عرض</a>
+                                                href="{{ route('show', $role->id) }}">عرض</a>
                                         @endcan
                                         
-                                        @can('تعديل صلاحية')
+                                        @can('تعديل الصلاحيات')
                                             <a class="btn btn-primary btn-sm"
                                                 href="{{ route('edit_role', $role->id) }}">تعديل</a>
                                         @endcan
 
-                                        @if ($role->name !== 'owner')
-                                            @can('حذف صلاحية')
-                                                {!! Form::open(['method' => 'POST', 'route' => ['delete_role',
-                                                $role->id], 'style' => 'display:inline']) !!}
-                                                {!! Form::submit('حذف', ['class' => 'btn btn-danger btn-sm']) !!}
-                                                {!! Form::close() !!}
+                                        @if ($role->name !== 'Admin')
+                                            @can('حذف الصلاحيات')
+                                                <form method="POST" action="{{ route('delete_role', $role->id) }}" style="display: inline;">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-danger btn-sm">حذف</button>
+                                                </form>
                                             @endcan
                                         @endif
 
@@ -129,7 +130,7 @@
 </div>
 <!-- main-content closed -->
 @endsection
-@section('js')
+@section('scripts')
 <!--Internal  Notify js -->
 <script src="{{ URL::asset('assets/plugins/notify/js/notifIt.js') }}"></script>
 <script src="{{ URL::asset('assets/plugins/notify/js/notifit-custom.js') }}"></script>
